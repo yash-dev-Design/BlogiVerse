@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Blogiverse</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="blogger.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="admin-login-body">
+    <div class="admin-login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h2>Admin Login</h2>
+                <p>Access the Blogiverse Admin Panel</p>
+            </div>
+            <form id="admin-login-form" class="login-form">
+                <div class="form-group">
+                    <label for="admin-username">Username</label>
+                    <input type="text" id="admin-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" required>
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+                <div id="login-message" class="login-message"></div>
+            </form>
+            <div class="login-footer">
+                <p><a href="index.html">← Back to Blog</a></p>
+                <div class="demo-credentials">
+                    <p><strong>Demo Credentials:</strong></p>
+                    <p>Username: admin</p>
+                    <p>Password: admin123</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('admin-login-form');
+            const messageDiv = document.getElementById('login-message');
+
+            // Check if already logged in
+            if (sessionStorage.getItem('isAdminLoggedIn') === 'true') {
+                window.location.href = 'admin-panel.html';
+                return;
+            }
+
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const username = document.getElementById('admin-username').value;
+                const password = document.getElementById('admin-password').value;
+
+                // Simple authentication (in a real app, use proper authentication)
+                if (username === 'admin' && password === 'admin123') {
+                    sessionStorage.setItem('isAdminLoggedIn', 'true');
+                    showMessage('Login successful! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'admin-panel.html';
+                    }, 1000);
+                } else {
+                    showMessage('Invalid username or password!', 'error');
+                }
+            });
+
+            function showMessage(message, type) {
+                messageDiv.textContent = message;
+                messageDiv.className = `login-message ${type}`;
+                messageDiv.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
